@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//<<<=======Route======>>>>>
 Route::get('/', function () {
     return view('welcome');
 });
@@ -55,3 +56,18 @@ Route::view('/post', 'post', ['id' => 20]);
 
 //Định tuyến đến một controller
 Route::get('/post/{id}', 'Postcontroller@detail');
+
+
+//<<<=======Controller======>>>>>
+Route::get('products/{id}', 'Productcontroller@show');
+Route::get('update/{id}', 'Productcontroller@update');
+
+// Route::resource('posts', 'PostController');
+Route::get('admin/post/show', 'AdminPostController@show');
+Route::get('admin/post/add', 'AdminPostController@add');
+Route::get('admin/post/update/{id}', 'AdminPostController@update');
+Route::get('admin/post/delete/{id}', 'AdminPostController@delete');
+
+Route::get('child', function () {
+    return view('child', ['data' => '<b>Trần Quang Quý</b>']);
+});
