@@ -16,6 +16,6 @@ class ProductController extends Controller
     {
         // Chuyển hướng đến một route.
         // return redirect('posts');
-        return redirect()->route('posts.index');
+        return redirect('posts/index');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,6 +68,42 @@ Route::get('admin/post/add', 'AdminPostController@add');
 Route::get('admin/post/update/{id}', 'AdminPostController@update');
 Route::get('admin/post/delete/{id}', 'AdminPostController@delete');
 
-Route::get('child', function () {
-    return view('child', ['data' => '<b>Trần Quang Quý</b>']);
+
+Route::get('child/{id}', function ($id) {
+    $users = array(
+        1 => array(
+            'fullname' => 'Trần Quang Quý',
+            'age' => 20,
+            'address' => 'Hà Nội'
+        ),
+        2 => array(
+            'fullname' => 'Ngọ Văn Thi',
+            'age' => 28,
+            'address' => 'Đà Năng'
+        ),
+        3 => array(
+            'fullname' => 'Đăng Văn Tùng',
+            'age' => 22,
+            'address' => 'Hai Bà Trưng'
+        )
+    );
+    return view('child', compact('users'));
 });
+
+
+
+//Thêm dữ liệu vào database ngay trên route
+Route::get('users/insert', function () {
+    DB::table('tbl_users')->insert(
+        [
+            ['name' => "Maicute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
+            ['name' => "Huycute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
+        ]
+    );
+});
+
+//Thêm dữ liệu vào database qua controller(insert)
+Route::get('posts/insert', 'PostController@add');
+
+//Lấy dữ liệu từ database(get)
+Route::get('posts/show', 'PostController@show');

@@ -2,84 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    //
+    function add()
     {
-        //
-        return "Đây là trang index bài viết";
+        DB::table('tbl_posts')->insert(
+            [
+                ['creator' => 1, 'post_name' => "Tại sao bạn cần phải học"],
+                ['creator' => 2, 'post_name' => "Tiếng anh quan trọng như nào?"],
+                ['creator' => 3, 'post_name' => "Cách bắn bi a hay"],
+            ]
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    function show()
     {
-        //
-    }
+        //Lấy tất cả bản ghi
+        // return $posts = DB::table('tbl_users')->get();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        //Lấy 1 bản ghi
+        // $posts = DB::table('tbl_users')->select('name', 'email')->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        //Lấy bản ghi có điều kiện
+        // return $posts = DB::table('tbl_users')->where('id', 2)->get('name');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        //Lấy bản ghi có id cho trước 
+        // $posts = DB::table('tbl_users')->find(1);
+        // return $posts->name;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        //Đếm số lượng bản ghi
+        // return $posts = DB::table('tbl_users')->where('id', 1)->count();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        //Phương thức phục vụ thống kê
+        // return DB::table('tbl_users')->max('id');
+        // return DB::table('tbl_users')->min('id');
+        // return DB::table('tbl_users')->avg('id');
+
+        //Cách join bảng
+        // $posts = DB::table('tbl_posts')->join('tbl_users', 'tbl_posts.creator', '=', 'tbl_users.id')
+        //     ->select('tbl_posts.post_name', 'tbl_users.name')
+        //     ->get();
+        // dd($posts);
+
+        //Lấy dữ liệu bảng theo điều kiện
+        $posts = DB::table('tbl_posts')
+            // ->where('id', '<', 3)
+            ->where('post_name', 'Like', '%bi%')
+            ->get();
+        dd($posts);
     }
 }
