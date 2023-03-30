@@ -22,37 +22,72 @@ class PostController extends Controller
 
     function show()
     {
-        //Lấy tất cả bản ghi
+        #Lấy tất cả bản ghi
         // return $posts = DB::table('tbl_users')->get();
 
-        //Lấy 1 bản ghi
+        #Lấy 1 bản ghi
         // $posts = DB::table('tbl_users')->select('name', 'email')->first();
 
-        //Lấy bản ghi có điều kiện
+        #Lấy bản ghi có điều kiện
         // return $posts = DB::table('tbl_users')->where('id', 2)->get('name');
 
-        //Lấy bản ghi có id cho trước 
+        #Lấy bản ghi có id cho trước 
         // $posts = DB::table('tbl_users')->find(1);
         // return $posts->name;
 
-        //Đếm số lượng bản ghi
+        #Đếm số lượng bản ghi
         // return $posts = DB::table('tbl_users')->where('id', 1)->count();
 
-        //Phương thức phục vụ thống kê
+        #Phương thức phục vụ thống kê
         // return DB::table('tbl_users')->max('id');
         // return DB::table('tbl_users')->min('id');
         // return DB::table('tbl_users')->avg('id');
 
-        //Cách join bảng
+        #Cách join bảng
         // $posts = DB::table('tbl_posts')->join('tbl_users', 'tbl_posts.creator', '=', 'tbl_users.id')
         //     ->select('tbl_posts.post_name', 'tbl_users.name')
         //     ->get();
         // dd($posts);
 
-        //Lấy dữ liệu bảng theo điều kiện
+        #Lấy dữ liệu bảng theo điều kiện
+        // $posts = DB::table('tbl_posts')
+        //     // ->where('id', '<', 3)
+        //     ->where('post_name', 'Like', '%bi%')
+        //     ->get();
+        // dd($posts);
+
+        #Thiết lập điều kiện kết hợp
+        // $posts = DB::table('tbl_posts')
+        //     ->where([
+        //         ['post_name', 'Like', '%bi%'],
+        //         ['id', '>', 1]
+        //     ])
+        //     ->get();
+        // dd($posts);
+
+        # $posts = DB::table('tbl_posts')
+        //     ->where('post_name', 'Like', '%bi%')
+        //     ->orWhere('id', '1')
+        //     ->get();
+        // dd($posts);
+
+        #Group by lấy dữ liệu theo nhóm
+        // $posts = DB::table('tbl_posts')
+        //     ->selectRaw("COUNT('post_id') as number_post,creator")
+        //     ->groupBy('creator')
+        //     ->get();
+        // dd($posts);
+
+        #Order by sắp xếp dữ liệu trong thống kê
+        // $posts = DB::table('tbl_posts')
+        //     ->orderBy('id')
+        //     ->get();
+        // dd($posts);
+
+        #Lấy số bản ghi theo giới hạn
         $posts = DB::table('tbl_posts')
-            // ->where('id', '<', 3)
-            ->where('post_name', 'Like', '%bi%')
+            ->offset(3)
+            ->limit(3)
             ->get();
         dd($posts);
     }
