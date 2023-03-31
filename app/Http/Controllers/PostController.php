@@ -100,11 +100,21 @@ class PostController extends Controller
         // dd($posts);
 
         #Lấy số bản ghi theo giới hạn
-        $posts = DB::table('tbl_posts')
-            ->offset(3)
-            ->limit(3)
+        // $posts = DB::table('tbl_posts')
+        //     ->offset(3)
+        //     ->limit(3)
+        //     ->get();
+        // dd($posts);
+
+        #Lấy dữ liệu đã xóa tạm thời
+        // $post = Post::withoutTrashed()
+        //     ->get();
+        // dd($post);
+
+        #Chỉ lấy dữ liệu đã xóa
+        $post = Post::onlyTrashed()
             ->get();
-        dd($posts);
+        dd($post);
     }
 
     function update($id)
@@ -135,8 +145,19 @@ class PostController extends Controller
 
     function delete($id)
     {
-        return  DB::table('tbl_posts')
-            ->where('id', $id)
+        // return  DB::table('tbl_posts')
+        //     ->where('id', $id)
+        //     ->delete();
+
+        // $post = Post::find($id)
+        //     ->delete();
+
+
+        // $post = Post::where('id', '>', '4')
+        //     ->delete();
+
+        //Xóa bản ghi tạm thời vào softdelete
+        $post = Post::find($id)
             ->delete();
     }
 }
