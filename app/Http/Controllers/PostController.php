@@ -5,19 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostController extends Controller
 {
     //
     function add()
     {
-        DB::table('tbl_posts')->insert(
-            [
-                ['creator' => 1, 'post_name' => "Tại sao bạn cần phải học"],
-                ['creator' => 2, 'post_name' => "Tiếng anh quan trọng như nào?"],
-                ['creator' => 3, 'post_name' => "Cách bắn bi a hay"],
-            ]
-        );
+        // DB::table('tbl_posts')->insert(
+        //     [
+        //         ['creator' => 1, 'post_name' => "Tại sao bạn cần phải học"],
+        //         ['creator' => 2, 'post_name' => "Tiếng anh quan trọng như nào?"],
+        //         ['creator' => 3, 'post_name' => "Sách 10 vạn câu hỏi vì sao"],
+        //         ['creator' => 4, 'post_name' => "Sách giáo dục trẻ nhỏ"],
+        //     ]
+        // );
+
+
+        // $post = new Post;
+        // $post->post_name = 'Laravel Pro';
+        // $post->creator = 1;
+        // $post->save();
+
+
+        //Sử dụng xuyên suốt
+        Post::create([
+            'post_name' => 'PHP Master',
+            'creator' => 2,
+        ]);
     }
 
     function show()
@@ -90,5 +105,38 @@ class PostController extends Controller
             ->limit(3)
             ->get();
         dd($posts);
+    }
+
+    function update($id)
+    {
+        // DB::table('tbl_posts')
+        //     ->where('id', $id)
+        //     ->update(
+        //         [
+        //             'post_name' => 'Cách bắn bi hay',
+        //         ]
+        //     );
+
+        // $post = Post::find($id);
+        // $post->post_name = 'Laravel Pro 2023';
+        // $post->creator = 1;
+        // $post->save();
+
+
+        //Sử dụng xuyên suốt
+        $post = Post::find($id)
+            ->update([
+                'post_name' => 'Trần Quang Quý',
+                'creator' => '3'
+            ]);
+    }
+
+
+
+    function delete($id)
+    {
+        return  DB::table('tbl_posts')
+            ->where('id', $id)
+            ->delete();
     }
 }

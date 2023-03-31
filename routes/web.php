@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use App\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,7 +59,7 @@ Route::view('/post', 'post', ['id' => 20]);
 Route::get('/post/{id}', 'Postcontroller@detail');
 
 
-//<<<=======Controller======>>>>>
+//<<<=======Controller======>>>>> 
 Route::get('products/{id}', 'Productcontroller@show');
 Route::get('update/{id}', 'Productcontroller@update');
 
@@ -93,17 +94,80 @@ Route::get('child/{id}', function ($id) {
 
 
 //Thêm dữ liệu vào database ngay trên route
-Route::get('users/insert', function () {
+Route::get('users/add', function () {
     DB::table('tbl_users')->insert(
         [
-            ['name' => "Maicute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
+            ['name' => "Thicute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
             ['name' => "Huycute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
+            ['name' => "Cuongcute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
+            ['name' => "Huancute2003", 'email' => 'tranquy52003@gmail.com', 'password' => bcrypt('Hieu1976')],
         ]
     );
 });
 
 //Thêm dữ liệu vào database qua controller(insert)
-Route::get('posts/insert', 'PostController@add');
+Route::get('posts/add', 'PostController@add');
 
 //Lấy dữ liệu từ database(get)
 Route::get('posts/show', 'PostController@show');
+
+//Cập nhật dữ liệu
+Route::get('posts/update/{id}', 'PostController@update');
+
+//Xóa dữ liệu
+Route::get('posts/delete/{id}', 'PostController@delete');
+
+Route::get('admin/products/add', 'AdminProductController@add');
+Route::get('admin/products/update/{id}', 'AdminProductController@update');
+Route::get('admin/products/delete/{id}', 'AdminProductController@delete');
+Route::get('admin/products/show', 'AdminProductController@show');
+
+
+//================Eloquent ORM=========================
+
+#Lấy tất cả
+// Route::get('posts/show', function () {
+//     $posts = Post::all('post_name');
+//     dd($posts);
+// });
+
+#Lấy theo điều kiện
+// Route::get('posts/show', function () {
+//     $posts = Post::where('id', '>', '1')->select('post_name', 'creator')
+//         ->get();
+//     // dd($posts);
+//     return $posts;
+// });
+
+#Lấy nội dung theo ID
+// Route::get('posts/show', function () {
+//     $posts = Post::find([1, 2]);
+//     dd($posts);
+//     return ($posts->post_name);
+// });
+
+#Lấy nội dung theo OrderBY
+// Route::get('posts/show', function () {
+//     $posts = Post::orderBy('id', 'desc')
+//         ->get();
+//     dd($posts);
+// });
+
+#Group by lấy dữ liệu theo nhóm
+// $posts = Post::selectRaw("COUNT('post_id') as number_post,creator")
+//     ->groupBy('creator')
+//     ->get();
+// dd($posts);
+
+#Lấy limit dữ liệu
+// $posts = Post::offset(2)
+//     ->limit(3)
+//     ->get();
+// dd($posts);
+
+#Thêm dữ liệu vào database bằng pT save
+// $post = new Post;
+// $post->post_name = 'Laravel Pro';
+// $post->creator = 1;
+
+// $post->save();
