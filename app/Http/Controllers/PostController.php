@@ -29,10 +29,11 @@ class PostController extends Controller
 
 
         //Sử dụng xuyên suốt
-        Post::create([
-            'post_name' => 'PHP Master',
-            'creator' => 2,
-        ]);
+        // Post::create([
+        //     'creator' => 1, 'post_name' => "Trần Quang Quý",
+        // ]);
+
+        return view('post.create');
     }
 
     function show()
@@ -112,9 +113,15 @@ class PostController extends Controller
         // dd($post);
 
         #Chỉ lấy dữ liệu đã xóa
-        $post = Post::onlyTrashed()
-            ->get();
-        dd($post);
+        // $post = Post::onlyTrashed()
+        //     ->get();
+        // dd($post);
+
+
+        $img = Post::find(1)
+            ->FeaturedImages()->get();
+
+        return $img;
     }
 
     function update($id)
@@ -159,5 +166,20 @@ class PostController extends Controller
         //Xóa bản ghi tạm thời vào softdelete
         $post = Post::find($id)
             ->delete();
+    }
+
+
+    function restore($id)
+    {
+        $post = Post::onlyTrashed()
+            ->where('id', $id)
+            ->restore();
+    }
+
+    function permanentlyDelete($id)
+    {
+        $post = Post::onlyTrashed()
+            ->where('id', $id)
+            ->forceDelete();
     }
 }

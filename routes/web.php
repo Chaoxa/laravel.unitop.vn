@@ -120,7 +120,7 @@ Route::get('posts/delete/{id}', 'PostController@delete');
 Route::get('admin/products/add', 'AdminProductController@add');
 Route::get('admin/products/update/{id}', 'AdminProductController@update');
 Route::get('admin/products/delete/{id}', 'AdminProductController@delete');
-Route::get('admin/products/show', 'AdminProductController@show');
+Route::get('admin/products/show', 'AdminProductController@show')->name('admin.products.show');
 
 
 //================Eloquent ORM=========================
@@ -159,7 +159,7 @@ Route::get('admin/products/show', 'AdminProductController@show');
 //     ->get();
 // dd($posts);
 
-#Lấy limit dữ liệu
+#Lấy limit dữ liệu 
 // $posts = Post::offset(2)
 //     ->limit(3)
 //     ->get();
@@ -171,3 +171,19 @@ Route::get('admin/products/show', 'AdminProductController@show');
 // $post->creator = 1;
 
 // $post->save();
+
+Route::get('posts/restore/{id}', 'PostController@restore');
+Route::get('posts/permanentlydelete/{id}', 'PostController@permanentlyDelete');
+
+Route::get('users/show', 'UserController@show');
+Route::get('roles/show', 'RoleController@show');
+
+Route::get('admin/posts/add', function () {
+    return view('admin.post.add');
+});
+Route::post('admin/posts/store', 'AdminPostController@store');
+Route::get('admin/products/add', function () {
+    return view('admin.product.add');
+});
+Route::post('admin/products/store', 'AdminProductController@store');
+Route::get('helper/', 'HelperController@string');

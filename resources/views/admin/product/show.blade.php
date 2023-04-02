@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>Đây là trang hiển thị sản phẩm</h1>
-</body>
-
-</html>
+@section('content')
+<div class="container">
+    <h1>Hiển thị danh sách sản phẩm</h1>
+    @if (session('status'))
+    <div class="alert-success alert">
+        {{session('status')}}
+    </div>
+    @endif
+    @foreach ($products as $product)
+    <li>
+        <img src="{{asset($product -> thumb_main)}}" alt="lỗi" width="50" height="50">
+        <a href="">{{$product -> name_product}}</a>
+        <a href="">{{$product -> name}}</a>
+    </li>
+    @endforeach
+</div>
+@endsection

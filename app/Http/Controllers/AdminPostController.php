@@ -23,4 +23,21 @@ class AdminPostController extends Controller
     {
         return "Cập nhật bài viết có id:$id";
     }
+
+    function store(Request $request)
+    {
+        $request->validate(
+            [
+                'fullname' => 'required',
+                'email' => 'required'
+            ],
+            [
+                'required' => 'Trường :attribute không được để trống!'
+            ],
+            [
+                'fullname' => 'họ tên'
+            ]
+        );
+        // return $request->input();
+    }
 }
