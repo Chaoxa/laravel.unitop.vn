@@ -187,3 +187,14 @@ Route::get('admin/products/add', function () {
 });
 Route::post('admin/products/store', 'AdminProductController@store');
 Route::get('helper/', 'HelperController@string');
+
+
+Route::get('session/add', 'SessionController@add');
+Route::get('session/show', 'SessionController@show');
+Route::get('session/add_flash', 'SessionController@add_flash');
+Route::get('session/delete', 'SessionController@delete');
+
+Route::get('cookie/set', 'CookieController@set');
+Route::get('cookie/get', 'CookieController@get');
+
+Route::get('demo/sendmail', 'DemoController@sendmail');

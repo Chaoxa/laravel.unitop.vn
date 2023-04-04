@@ -40,11 +40,15 @@ class AdminProductController extends Controller
 
     function show()
     {
-        $products =  DB::table('tbl_products')
-            ->join('tbl_users', 'tbl_users.id', '=', 'tbl_products.creator')
-            ->select('name_product', 'creator', 'thumb_main', 'name')
-            ->get();
+        $products = Product::join('tbl_users', 'tbl_products.creator', '=', 'tbl_users.id')
+            ->select('name_product', 'name', 'thumb_main')
+            ->where('tbl_products.id', '>', '8')
+            ->paginate(4);
+        #Thay đổi đường path
+        // ->withPath('demo/show');
+        // ->simplePaginate(4);
         // dd($products);
+
         return view('admin.product.show', compact('products'));
     }
 
@@ -80,10 +84,10 @@ class AdminProductController extends Controller
 
         Product::create($input);
         #Chuyển hướng đến một url
-        // return redirect('admin/products/show');
+        return redirect('admin/products/show');
         #Chuyển hướng kèm thông báo
         // return redirect('admin/products/show')->with('status', 'Thêm sản phẩm thành công');
         #Chuyển hướng đến một trang ngoài hệ thống
-        return redirect()->away('https://www.facebook.com/');
+        // return redirect()->away('https://www.facebook.com/');
     }
 }

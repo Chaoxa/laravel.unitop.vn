@@ -15,5 +15,7 @@
         <a href="">{{$product -> name}}</a>
     </li>
     @endforeach
+    {{-- Tạo hiển thị thanh phân trang có điều kiện --}}
+    <b class="py-2"> {{$products ->appends(['sort' => 'votes','price' => '100']) ->links()}}</b>
 </div>
 @endsection
