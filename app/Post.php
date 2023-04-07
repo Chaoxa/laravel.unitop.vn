@@ -10,7 +10,7 @@ class Post extends Model
     //
     use SoftDeletes;
     protected $table = 'tbl_posts';
-    protected $fillable = ['post_name', 'creator'];
+    protected $fillable = ['title', 'creator', 'desc'];
 
     #One to One
     function FeaturedImages()

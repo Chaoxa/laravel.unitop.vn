@@ -182,6 +182,7 @@ Route::get('admin/posts/add', function () {
     return view('admin.post.add');
 });
 Route::post('admin/posts/store', 'AdminPostController@store');
+Route::get('admin/posts/show', 'AdminPostController@show');
 Route::get('admin/products/add', function () {
     return view('admin.product.add');
 });
@@ -198,3 +199,7 @@ Route::get('cookie/set', 'CookieController@set');
 Route::get('cookie/get', 'CookieController@get');
 
 Route::get('demo/sendmail', 'DemoController@sendmail');
+
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

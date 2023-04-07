@@ -5,19 +5,22 @@
     <h1>Thêm bài viết</h1>
     {!! Form::open(['url'=>'admin/posts/store','method' => 'POST','id' => 'form-reg','files' => true]) !!}
     <div class="form-group">
-        {!! Form::label('fullname', 'Họ và tên', []) !!}
-        {!! Form::text('fullname', '', ['class' => 'form-control','id' => 'fullname']) !!}
-        @error('fullname')
+        {!! Form::label('title', 'Tên bài viết', []) !!}
+        {!! Form::text('title', '', ['class' => 'form-control','id' => 'title']) !!}
+        @error('title')
         <small class="text-danger">{{$message}}</small>
         @enderror
         <span class="form-message"></span>
     </div>
     <div class="form-group">
         {!! Form::label('', 'Mô tả sản phẩm', []) !!}
-        {!! Form::textarea('desc', '', ['class' => 'form-control']) !!}
+        {!! Form::textarea('desc', '', ['class' => 'form-control my-editor']) !!}
+        @error('desc')
+        <small class="text-danger">{{$message}}</small>
+        @enderror
         <span class="form-message"></span>
     </div>
-    <div class="form-group">
+    {{-- <div class="form-group">
         {!! Form::label('password', 'Mật khẩu', []) !!}
         {!! Form::password('password', ['class' => 'form-control','id' => 'password']) !!}
         <span class="form-message"></span>
@@ -63,7 +66,7 @@
     <div class="form-group">
         {!! Form::label('', 'Ngày sinh', ['class' => 'form-control-file']) !!}
         {!! Form::date('birth', '', ['class' => 'form-control']) !!}
-    </div>
+    </div> --}}
     <div class="form-group">
         {!! Form::submit('Thêm', ['class' => 'btn btn-success','name' => 'btn-add']) !!}
     </div>

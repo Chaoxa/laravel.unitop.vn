@@ -88,6 +88,6 @@ class AdminProductController extends Controller
         #Chuyển hướng kèm thông báo
         // return redirect('admin/products/show')->with('status', 'Thêm sản phẩm thành công');
         #Chuyển hướng đến một trang ngoài hệ thống
-        // return redirect()->away('https://www.facebook.com/');
+        return redirect()->away('https://www.facebook.com/');
     }
 }

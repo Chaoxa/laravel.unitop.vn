@@ -15,7 +15,7 @@ class AddNamePostToTblPostsTable extends Migration
     {
         Schema::table('tbl_posts', function (Blueprint $table) {
             //
-            $table->string('post_name');
+            $table->string('title');
         });
     }
 
@@ -27,7 +27,7 @@ class AddNamePostToTblPostsTable extends Migration
     public function down()
     {
         Schema::table('tbl_posts', function (Blueprint $table) {
-            $table->dropColumn('post_name');
+            $table->dropColumn('title');
         });
     }
 }

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class AdminPostController extends Controller
 {
     //
     function show()
     {
-        return view('admin.post.show');
+        $posts = Post::all();
+        return view('admin.post.show', compact('posts'));
     }
     function add()
     {
@@ -28,16 +30,21 @@ class AdminPostController extends Controller
     {
         $request->validate(
             [
-                'fullname' => 'required',
-                'email' => 'required'
+                'title' => 'required',
+                'desc' => 'required'
             ],
             [
-                'required' => 'Trường :attribute không được để trống!'
+                'required' => ':attribute không được để trống!'
             ],
             [
-                'fullname' => 'họ tên'
+                'title' => 'Tên bài viết ',
+                'desc' => 'Mô tả bài viết'
             ]
         );
+        $input = $request->input();
+        $input['creator'] =  1;
+        Post::create($input);
+        return redirect('admin/posts/show')->with('status', 'Đã thêm bài viết thành công!');
         // return $request->input();
     }
 }
