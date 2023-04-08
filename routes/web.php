@@ -200,6 +200,13 @@ Route::get('cookie/get', 'CookieController@get');
 
 Route::get('demo/sendmail', 'DemoController@sendmail');
 
+Route::get('cart/show', 'CartController@show');
+Route::get('cart/add/{id}', 'CartController@add')->name('cart.add');
+Route::get('cart/destroy', 'CartController@destroy');
+Route::get('cart/remove/{rouId}', 'CartController@remove');
+Route::get('cart/destroy', 'CartController@destroy');
+Route::post('cart/update', 'CartController@update');
+
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
