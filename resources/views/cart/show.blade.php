@@ -37,10 +37,30 @@
                                 <td scope="col"><a href="">{{$product -> name}}</a></td>
                                 <td scope="col">{{number_format($product -> price,'0','','.')}}đ</td>
                                 <td scope="col">
-                                    <input type="number" name="qty[{{$product -> rowId}}]" min="1"
-                                        style="width:50px; text-align: center" value="{{$product -> qty}}">
+                                    <style>
+                                        .button-qty {
+                                            border: 1px solid black;
+                                            /* width: 10px;
+                                            display: inline-block; */
+                                            padding: 5px;
+                                        }
+
+                                        .num_order {
+                                            text-align: center;
+                                            cursor: pointer;
+                                            border: none;
+
+                                        }
+                                    </style>
+                                    <div class="quantity">
+                                        <span class="minus button-qty btn btn-danger">-</span>
+                                        <input type="text" class="num_order" min="1" value="{{$product -> qty}}"
+                                            data-id="{{$product -> rowId }}" style="width:30px">
+                                        <span class="plus button-qty btn btn-success">+</span>
+                                    </div>
                                 </td>
-                                <td scope="col">{{number_format($product -> total,'0','','.')}}đ</td>
+                                <td scope="col" id="sub-total-{{$product -> rowId}}">{{number_format($product ->
+                                    total,'0','','.')}}đ</td>
                                 <td><a href="{{url('cart/remove/'.$product -> rowId)}}" class="text-danger">Xóa</a></td>
                             </tr>
                             @endforeach
@@ -48,7 +68,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan='6' class="text-right">Tổng:</td>
-                                <td><strong>{{Cart::total()}} VNĐ</strong></td>
+                                <td><strong id="total-price">{{Cart::total()}} VNĐ</strong></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -60,4 +80,67 @@
     </div>
 </div>
 <!-- end wp-content -->
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+<script>
+    // Select all elements with class "minus" and "plus"
+const minusBtns = document.querySelectorAll(".minus");
+const plusBtns = document.querySelectorAll(".plus");
+
+// Add click event listeners to all minus and plus buttons
+minusBtns.forEach(btn => {
+  btn.addEventListener("click", decreaseQuantity);
+});
+plusBtns.forEach(btn => {
+  btn.addEventListener("click", increaseQuantity);
+});
+
+// Function to decrease quantity
+function decreaseQuantity(e) {
+  const input = e.target.parentElement.querySelector(".num_order");
+  const value = parseInt(input.value);
+  if (value > 1) {
+    input.value = value - 1;
+  }
+}
+ 
+// Function to increase quantity
+function increaseQuantity(e) {
+  const input = e.target.parentElement.querySelector(".num_order");
+  const value = parseInt(input.value);
+  input.value = value + 1;
+}
+</script>
+<script>
+    //ajax giỏ hàng
+        $(document).ready(function() {
+            $(".button-qty").click(function() {
+                // alert('oke');
+                var input = $(this).parent().find(".num_order");
+                var id = input.attr('data-id');
+                var qty = input.val();
+                var data = {
+                    id: id,
+                    qty: qty,
+                    _token: '{{ csrf_token() }}'
+                };
+                console.log(data);
+                $.ajax({
+                    url: '{{route("cart.update_ajax")}}',
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function(data) {
+                        $("#sub-total-" + id).text(data.sub_total);
+                        $("#total-price").text(data.total);
+                        // console.log(data);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    },
+                });
+            });
+        });
+</script>
 @endsection

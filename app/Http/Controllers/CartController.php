@@ -47,4 +47,19 @@ class CartController extends Controller
         }
         return redirect('cart/show');
     }
+
+
+    public function update_ajax(Request $request)
+    {
+        $id = $request->id;
+        $qty = $request->qty;
+        Cart::update($id, $qty);
+        $sub_total =  Cart::get($id)->subtotal();
+        $total =  Cart::total();
+        return response()->json([
+            'id' => $id,
+            'sub_total' => $sub_total . 'đ',
+            'total' => $total . 'đ'
+        ]);
+    }
 }
